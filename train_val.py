@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings('ignore')
 from datasets import fashion_iq
 from datasets import shoes
 from datasets import vocabulary
@@ -80,7 +82,7 @@ tf.app.flags.DEFINE_string(
 # Define the input data
 ##############################################################################################
 tf.app.flags.DEFINE_string(
-  'dataset', "fashion_iq or shoes")
+  'dataset', None, "fashion_iq or shoes")
 tf.app.flags.DEFINE_string(
   'data_split', "train", 'either "train" or "test".')
 tf.app.flags.DEFINE_string(

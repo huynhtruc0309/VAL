@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings('ignore')
 from datasets import fashion200k
 from datasets import fashion_iq
 from datasets import shoes

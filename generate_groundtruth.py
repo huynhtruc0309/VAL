@@ -17,9 +17,9 @@ import numpy as np
 tf.app.flags.DEFINE_string(
   'data_path', "datasets/fashion200k", 'path of dataset.')
 tf.app.flags.DEFINE_string(
-  'data_split', "test")
+  'data_split', "test", '')
 tf.app.flags.DEFINE_string(
-  'dataset', "fashion200k")
+  'dataset', "fashion200k", '')
 tf.app.flags.DEFINE_string(
   'subset', None, 'can be "dress" or "shirt" or "toptee".')
   

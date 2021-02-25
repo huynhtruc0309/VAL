@@ -7,7 +7,7 @@ import tensorflow as tf
 # Define the input data
 ##############################################################################################
 tf.app.flags.DEFINE_string(
-  'dataset', "fashion_iq or shoes")
+  'dataset', "fashion_iq or shoes", '')
 
 FLAGS = tf.app.flags.FLAGS
 

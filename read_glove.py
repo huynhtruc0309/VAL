@@ -11,9 +11,9 @@ import tensorflow as tf
 # python read_glove.py --dataset='fashion200k' --data_path='datasets/fashion200k'
 
 tf.app.flags.DEFINE_string(
-  'glove_size', "42B")
+  'glove_size', "42B", '')
 tf.app.flags.DEFINE_string(
-  'dataset', "fashion200k")
+  'dataset', "fashion200k", '')
 tf.app.flags.DEFINE_string(
   'data_path', None, 'path of dataset.')
 tf.app.flags.DEFINE_string(
@@ -65,28 +65,28 @@ print("Number of samples = {}. Number of words = {}.".format(num_modif, vocab_si
 
 ########### read glove
 filename = "glove/glove." + FLAGS.glove_size + ".300d.txt"
-glove_vocab = []
-glove_embed = []
-embedding_dict = {}
 
-file = open(filename, 'r', encoding='UTF-8')
+def loadGloveModel(File):
+    print("Loading Glove Model")
+    f = open(File,'r')
+    gloveModel = {}
+    for line in f:
+        splitLines = line.split()
+        word = splitLines[0]
+        wordEmbedding = np.array([float(value) for value in splitLines[1:]])
+        gloveModel[word] = wordEmbedding
+    print(len(gloveModel)," words loaded!")
+    f.close()
+    return gloveModel
 
-for line in file.readlines():
-  row = line.strip().split(' ')
-  vocab_word = row[0]
-  glove_vocab.append(vocab_word)
-  embed_vector = [float(i) for i in row[1:]]  # convert to list of float
-  embedding_dict[vocab_word] = embed_vector
-  glove_embed.append(embed_vector)
-
-
+embedding_dict = loadGloveModel(filename)
 glove_vectors = np.zeros((len(vocab.word2id), len(embedding_dict['the'])))
 print(glove_vectors.shape)
 all_words = list(vocab.word2id.keys())
 glove_all_words = list(embedding_dict.keys())
 dim = len(embedding_dict['the'])
 mu, sigma = 0, 0.09 # mean and standard deviation
-
+print('2')
 count = 0
 for i in range(len(vocab.word2id)):
   word = all_words[i]
@@ -98,10 +98,8 @@ for i in range(len(vocab.word2id)):
   else:
     vec = np.asarray(embedding_dict[word])
   glove_vectors[idx,:] = vec
-
+print('3')
 filename = 'glove/' + FLAGS.dataset + '.'  + FLAGS.glove_size + '.300d.npy'
 print(count)
 print(filename)
 np.save(filename, glove_vectors)
-print('Loaded GLOVE')
-file.close()
